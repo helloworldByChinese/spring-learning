@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean 的XML配置，
+            id是唯一标识，IOC容器中需要是唯一的，不然会报异常；
+            class属性指定对应的全类名;
+            property子标签则是对应类中的setter方法名，其中的value则为setter的参数-->
+    <bean id="hello" class="com.helloworld.helloworld.HelloWorld">
+        <property name="name" value="baoyong"/>
+        <property name="age" value="26" />
+    </bean>
+
+    
+</beans>
