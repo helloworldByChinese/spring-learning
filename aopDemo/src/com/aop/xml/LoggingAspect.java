@@ -1,4 +1,4 @@
-package com.aop.demo1;
+package com.aop.xml;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -16,23 +16,9 @@ import java.util.List;
  * @author JiangBaoyong
  * @date 2020/01/03
  **/
-@Order(10)
-@Aspect
-@Component
 public class LoggingAspect {
 
-    /**
-     * 切入点方法：用于声明切入点表达式
-     * 一般不添加代码
-     * 可跨类引用
-     */
-    @Pointcut("execution(* com.aop.demo1.*Impl.*(..)) && !within(com.aop.demo1.within.*Impl)")
-    public void createLogging() {
-
-    }
-
     //前置通知：执行方法前的操作
-    @Before("createLogging()")
     public void check(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
@@ -41,14 +27,12 @@ public class LoggingAspect {
 
     //后置通知：方法执行后（无论是否异常），执行的操作
     //在后置通知中还不能方法目标方法返回的结果
-    @After("createLogging()")
     public void afterMethod(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         System.out.println("after 生效！！！method:" + methodName);
     }
 
     //返回通知：方法正常执行返回后的通知，可以访问到返回结果（异常不会执行）
-    @AfterReturning(value = "createLogging()", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
         String methodName = joinPoint.getSignature().getName();
         System.out.println("afterReturning 生效！！！method:" + methodName + "  result:" + result);
@@ -56,7 +40,6 @@ public class LoggingAspect {
 
     //异常通知：方法执行异常时会执行的通知
     //可以访问到异常对象，且可以指定出现特定异常时执行通知代码（就算出现异常，也要符合异常的种类才会进入）
-    @AfterThrowing(value = "createLogging()", throwing = "ex")
     public void afterThrowing(JoinPoint joinPoint, Exception ex) {
         String methodName = joinPoint.getSignature().getName();
         System.out.println("afterThrowing 生效！！！method:" + methodName + "  ex:" + ex);
@@ -68,7 +51,6 @@ public class LoggingAspect {
      * 且环绕通知必须有返回值，返回值即为目标方法的返回值
      * @param pjp
      */
-    @Around(value = "createLogging()")
     public Object around(ProceedingJoinPoint pjp) {
         String methodName = pjp.getSignature().getName();
         System.out.println("Around 生效！！！method:" + methodName + " begin with:" + Arrays.asList(pjp.getArgs()));
