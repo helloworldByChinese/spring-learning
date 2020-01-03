@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        ">
+    <bean id="helloWorld" class="com.helloworld.helloworld.HelloWorld" primary="true">
+        <constructor-arg  index="0" >
+            <value><![CDATA[<<<te>st]]></value>
+            </constructor-arg>
+        <property name="name" value="byJiang"/>
+    </bean>
+
+    <bean id="helloWorld2" class="com.helloworld.helloworld.HelloWorld" init-method="initMethod" destroy-method="destroyMethod">
+        <constructor-arg value="test2 " index="0" />
+        <property name="name" value="byJiang"/>
+    </bean>
+
+    <bean id="car" class="com.helloworld.demo.Car">
+        <constructor-arg value="Baoma" index="0"/>
+        <constructor-arg value="200" index="1" />
+    </bean>
+
+    <bean id="car2" class="com.helloworld.demo.Car"  primary="true">
+        <constructor-arg value="Baoma2" index="0"/>
+        <constructor-arg value="200" index="1" />
+    </bean>
+
+   <!-- <bean id="person" class="com.helloworld.demo.Person">
+        <property name="name" value="byJ" />
+        <property name="car">
+            <bean class="com.helloworld.demo.Car">
+                <constructor-arg value="Baoma10" index="0"/>
+                <constructor-arg value="300" index="1" />
+            </bean>
+        </property>
+    </bean>-->
+    <!-- 级联属性赋值,需要先初始化car属性，才能设置级联属性car.name等等 autowire="byType" scope="prototype"-->
+    <bean id="person" class="com.helloworld.demo.Person" depends-on="car2">
+        <!--<property name="car" ref="car"/>
+        <property name="car.name" value="Audi" />
+        <property name="car.speed" value="150" />-->
+        <property name="name" value="byJ" />
+    </bean>
+
+    <!-- 集合属性配置 -->
+    <!--<list>
+                <ref bean="car"></ref>
+                <bean class="com.helloworld.demo.Car">
+                    <constructor-arg value="Baoma2" index="0"/>
+                    <constructor-arg value="200" index="1" />
+                </bean>
+            </list>-->
+    <!--<bean id="richPerson" class="com.helloworld.demo.RichPerson">
+        <property name="name" value="richMan" />
+        <property name="cars" ref="cars">
+
+        </property>
+    </bean>-->
+
+   <!-- <bean id="richPerson" class="com.helloworld.demo.RichPerson"
+          p:name="richMan2" p:cars-ref="cars"/>-->
+
+    <bean id="richPerson" class="com.helloworld.demo.RichPerson"
+          p:name="richMan2" autowire="byType"/>
+
+    <util:list id="cars2">
+        <ref bean="car"></ref>
+        <bean class="com.helloworld.demo.Car">
+            <constructor-arg value="Baoma2" index="0"/>
+            <constructor-arg value="200" index="1" />
+        </bean>
+    </util:list>
+
+    <!-- 配置Bean后置处理器 -->
+    <bean class="com.helloworld.config.BeanPostProcessDemo"/>
+
+</beans>
