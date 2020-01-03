@@ -1,12 +1,3 @@
-
-/out
-*.iml
-/.idea
-
-/**/out
-/**/*.iml
-/**/.idea
-
 # Compiled class file
 *.class
 
