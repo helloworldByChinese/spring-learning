@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 配置自动扫描的包 -->
+<!--    <context:component-scan base-package="com.aop.demo1"/>-->
+    <!-- 使aspectJ注解起作用，自动为匹配的类生成代理对象 -->
+<!--    <aop:aspectj-autoproxy/>-->
+    <!-- 配置对应的service的bean -->
+    <bean id="arithmeticServiceImpl" class="com.aop.xml.ArithmeticServiceImpl" />
+    <!-- aspect切面类也是一个bean，同样配置 -->
+    <bean id="loggingAspect" class="com.aop.xml.LoggingAspect" />
+    <bean id="testingOrderAspect" class="com.aop.xml.TestingOrderAspect" />
+
+    <!-- AOP -->
+    <aop:config>
+        <!-- 切点表达式 -->
+        <aop:pointcut id="pointcut" expression="execution(* com.aop.xml.*Impl.*(..)) and !within(com.aop.xml.within.*Impl)"/>
+        <!-- 配置切面及通知 -->
+        <aop:aspect ref="loggingAspect" order="2">
+            <aop:before method="check" pointcut-ref="pointcut" />
+            <aop:after method="afterMethod" pointcut-ref="pointcut" />
+            <aop:after-returning method="afterReturning" pointcut-ref="pointcut" returning="result" />
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut" throwing="ex" />
+            <aop:around method="around" pointcut-ref="pointcut" />
+        </aop:aspect>
+        
+        <aop:aspect ref="testingOrderAspect" order="12">
+            <aop:before method="before" pointcut-ref="pointcut" />
+        </aop:aspect>
+    </aop:config>
+
+    <aop:aspectj-autoproxy />
+
+</beans>
