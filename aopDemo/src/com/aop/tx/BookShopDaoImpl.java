@@ -3,6 +3,7 @@ package com.aop.tx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,19 @@ public class BookShopDaoImpl implements BookShopDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * 简单配置一下@Transactional 注解的几个属性
+     * propagation 对应 事务传播机制
+     * isolation 对应 隔离级别
+     * noRollbackFor 对应的是 不回滚异常
+     * readOnly 只读， 据说可以帮助数据库引擎优化事务
+     * timeout 超时时间 ，单位是s（秒）
+     * @param isbn
+     * @return
+     */
+    @Transactional(propagation = Propagation.REQUIRED,
+            isolation = Isolation.READ_COMMITTED, noRollbackFor = BookNullException.class,
+            readOnly = true, timeout = 10)
     @Override
     public int getBookNumberByIsbn(String isbn) {
         String sql = "select number from book where isbn = ?";

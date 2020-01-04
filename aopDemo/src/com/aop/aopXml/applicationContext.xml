@@ -13,15 +13,15 @@
     <!-- 使aspectJ注解起作用，自动为匹配的类生成代理对象 -->
 <!--    <aop:aspectj-autoproxy/>-->
     <!-- 配置对应的service的bean -->
-    <bean id="arithmeticServiceImpl" class="com.aop.xml.ArithmeticServiceImpl" />
+    <bean id="arithmeticServiceImpl" class="com.aop.aopXml.ArithmeticServiceImpl" />
     <!-- aspect切面类也是一个bean，同样配置 -->
-    <bean id="loggingAspect" class="com.aop.xml.LoggingAspect" />
-    <bean id="testingOrderAspect" class="com.aop.xml.TestingOrderAspect" />
+    <bean id="loggingAspect" class="com.aop.aopXml.LoggingAspect" />
+    <bean id="testingOrderAspect" class="com.aop.aopXml.TestingOrderAspect" />
 
     <!-- AOP -->
     <aop:config>
         <!-- 切点表达式 -->
-        <aop:pointcut id="pointcut" expression="execution(* com.aop.xml.*Impl.*(..)) and !within(com.aop.xml.within.*Impl)"/>
+        <aop:pointcut id="pointcut" expression="execution(* com.aop.aopXml.*Impl.*(..)) and !within(com.aop.aopXml.within.*Impl)"/>
         <!-- 配置切面及通知 -->
         <aop:aspect ref="loggingAspect" order="2">
             <aop:before method="check" pointcut-ref="pointcut" />

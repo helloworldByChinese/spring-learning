@@ -25,6 +25,7 @@ public class TransactionMain {
         DataSource dataSource = context.getBean(DataSource.class);
         System.out.println(dataSource.getConnection());
 
+//        checkTx(context);
         BigTransactionServiceImpl service = context.getBean(BigTransactionServiceImpl.class);
         //事务传播方式测试demo
 //        service.checkNonTransactional();
@@ -33,18 +34,20 @@ public class TransactionMain {
         service.checkWithTryCatch();
     }
 
-//    以下是jdbcTemplate调用的测试
-//        BookShopDao bookShopDao = context.getBean(BookShopDao.class);
-//
-//        Book book = new Book();
-//        String isbn = UUID.randomUUID().toString();
-//        book.setIsbn(isbn);
-//        int number = (int) (Math.random() * 100);
-//        book.setName("hello world" + number);
-//        book.setNumber(number);
-//        bookShopDao.insertBook(book);
-//
-//        System.out.println(bookShopDao.getBookNumberByIsbn(isbn));
+    private static void checkTx(ApplicationContext context) {
+        // 以下是jdbcTemplate调用的测试
+        BookShopDao bookShopDao = context.getBean(BookShopDao.class);
 
-//        bookShopDao.updateBookNum(isbn, 103);
+        Book book = new Book();
+        String isbn = UUID.randomUUID().toString();
+        book.setIsbn(isbn);
+        int number = (int) (Math.random() * 100);
+        book.setName("hello world" + number);
+        book.setNumber(number);
+        bookShopDao.insertBook(book);
+
+        System.out.println(bookShopDao.getBookNumberByIsbn(isbn));
+
+        bookShopDao.updateBookNum(isbn, 103);
+    }
 }

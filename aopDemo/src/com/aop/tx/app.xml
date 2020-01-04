@@ -2,8 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:component-scan base-package="com.aop.tx" />
 
@@ -26,14 +27,42 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!--以下是事务相关配置 begin-->
+    <!--简单事务相关配置 begin-->
     <!-- 配置事务管理器 -->
-    <bean id="transactionMannager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!-- 事务注解 -->
-    <tx:annotation-driven transaction-manager="transactionMannager" />
+    <!-- 支持事务注解的（@Transactional）指定使用哪个事务管理器 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
+    <!-- 简单事务相关配置 end -->
+
+    <!-- 多事务管理器的独立完整配置 begin-->
+    <!-- 1.配置事务管理器 -->
+    <bean id="transactionManagerOne"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 2.配置事务属性 -->
+    <!-- advice指定执行事务管理的bean，
+        xml配置的弊端就是我们在注解上添加的属性都无效了，采用了默认的值；
+        需要在下面配置才能生效 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManagerOne" >
+        <tx:attributes>
+            <tx:method name="*"/>
+<!--            <tx:method name="createDemoByNested" propagation="NESTED"/>-->
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 3. 配置事务切入点，以及把事务切入点和事务属性关联起来  -->
+    <!-- 此处选择的pointcut能够明确指定事务所包含的范围,一般采用execution的形式，当需要多条件的时候可以加入其它的 -->
+    <aop:config>
+        <aop:pointcut id="txPointcut" expression="execution(* com.aop.tx..*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+
+    <!-- 多事务管理器的独立完整配置 end -->
 </beans>

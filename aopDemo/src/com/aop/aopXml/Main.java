@@ -1,6 +1,5 @@
-package com.aop.xml;
+package com.aop.aopXml;
 
-import com.aop.xml.within.ProductService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -13,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         //1. 创建IOC 容器
-        ApplicationContext context = new ClassPathXmlApplicationContext("com/aop/xml/applicationContext.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("com/aop/aopXml/applicationContext.xml");
         //2. 从IOC容器中获取实例
         ArithmeticService service = context.getBean(ArithmeticService.class);
 

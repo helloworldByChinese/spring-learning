@@ -1,6 +1,4 @@
-package com.aop.xml;
-
-import org.springframework.stereotype.Service;
+package com.aop.aopXml;
 
 /**
  * @author JiangBaoyong
