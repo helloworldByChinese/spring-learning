@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 public class ArithmeticServiceImpl implements ArithmeticService {
     @Override
     public int add(int i, int j) {
+        //测试同一service内部方法调用是否通过切面
+        System.out.println("内部调用： " + sub(1,2));
         return i+j;
     }
 

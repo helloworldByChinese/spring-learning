@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
+ *
  * @author JiangBaoyong
  * @date 2020/01/03
  **/
@@ -17,11 +18,11 @@ public class Main {
         ArithmeticService service = context.getBean(ArithmeticService.class);
 
         System.out.println(service.add(1, 23));
-        System.out.println(service.sub(1, 23));
+//        System.out.println(service.sub(1, 23));
         //异常的情况
 //        System.out.println(service.div(1, 0));
 
-        ProductService productService = context.getBean(ProductService.class);
-        System.out.println(productService.add("Food"));
+//        ProductService productService = context.getBean(ProductService.class);
+//        System.out.println(productService.add("Food"));
     }
 }
