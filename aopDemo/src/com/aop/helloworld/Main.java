@@ -15,16 +15,16 @@ public class Main {
      */
     public static void main(String[] args) {
         ArithmeticService service = new ArithmeticServiceImpl();
-
-        //创建动态代理
-        ArithmeticService proxy = new ArithmeticProxy(service).getLogging();
-
 //        int result = service.add(1, 2);
+//        result = service.sub(3, 1);
+        //创建动态代理
+        ArithmeticService proxy = new ArithmeticProxy(service).getProxyService();
+
+
         int result = proxy.add(1,2);
 
         System.out.println("result: " + result);
 
-//        result = service.sub(3, 1);
         result = proxy.sub(3, 1);
 
         System.out.println("result: " + result);

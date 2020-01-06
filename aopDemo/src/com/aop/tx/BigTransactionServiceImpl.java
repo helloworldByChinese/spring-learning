@@ -68,9 +68,9 @@ public class BigTransactionServiceImpl {
 //            testService.createDemoByRequired();
 //            testService.createDemoByRequiresNew();
 //            testService.createDemoBySupports();
-//            testService.createDemoByNotSupported();
+            testService.createDemoByNotSupported();
 //            testService.createDemoByMandatory();
-            testService.createDemoByNested();
+//            testService.createDemoByNested();
         } catch (Exception e) {
             System.out.println(e.getCause());
             e.printStackTrace();

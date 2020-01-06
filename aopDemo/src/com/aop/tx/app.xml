@@ -41,18 +41,19 @@
 
     <!-- 多事务管理器的独立完整配置 begin-->
     <!-- 1.配置事务管理器 -->
-    <bean id="transactionManagerOne"
+    <!--<bean id="transactionManagerOne"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
-    </bean>
+    </bean>-->
 
     <!-- 2.配置事务属性 -->
     <!-- advice指定执行事务管理的bean，
         xml配置的弊端就是我们在注解上添加的属性都无效了，采用了默认的值；
         需要在下面配置才能生效 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManagerOne" >
+    <tx:advice id="txAdvice" transaction-manager="transactionManager" >
         <tx:attributes>
             <tx:method name="*"/>
+            <tx:method name="*NotSupported" propagation="NOT_SUPPORTED" />
 <!--            <tx:method name="createDemoByNested" propagation="NESTED"/>-->
         </tx:attributes>
     </tx:advice>

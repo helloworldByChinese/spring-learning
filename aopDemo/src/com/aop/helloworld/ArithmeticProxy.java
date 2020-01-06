@@ -1,5 +1,6 @@
 package com.aop.helloworld;
 
+import org.aspectj.lang.JoinPoint;
 import org.springframework.cglib.proxy.InvocationHandler;
 import org.springframework.cglib.proxy.Proxy;
 
@@ -32,7 +33,7 @@ public class ArithmeticProxy {
         this.service = service;
     }
 
-    public ArithmeticService getLogging() {
+    public ArithmeticService getProxyService() {
         ArithmeticService proxy = null;
         // 代理对象由哪一个类加载器加载
         ClassLoader classLoader = service.getClass().getClassLoader();
@@ -51,16 +52,24 @@ public class ArithmeticProxy {
             @Override
             public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
                 //注意：此处第一个参数一般不使用，因为该参数就是proxy，它调用方法又会回到这个invoke中，从而形成一个死循环
-                //运行前日志
-                System.out.println("method: " + method.getName() + " begins with objects:" + Arrays.asList(objects));
+                advisorBefore(method, objects);
                 //运行方法
                 Object result = method.invoke(service, objects);
-                //运行后日志
-                System.out.println("method: " + method.getName() + " ends with result:" + result);
+                advisorAfter(method);
                 return result;
             }
         };
         proxy = (ArithmeticService) Proxy.newProxyInstance(classLoader, inerfaces, h);
         return proxy;
+    }
+
+    private void advisorBefore(Method method, Object[] objects) {
+        //运行前日志
+        System.out.println("method: " + method.getName() + " begins with objects:" + Arrays.asList(objects));
+    }
+
+    private void advisorAfter( Method method) {
+        //运行后日志
+        System.out.println("method: " + method.getName() + " ends!");
     }
 }
