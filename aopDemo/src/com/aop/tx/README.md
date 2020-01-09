@@ -7,8 +7,8 @@
    1. 配置事务管理器transactionManagerOne
    2. 配置事务属性，也可以说是配置事务对应的管理器和需要处理的方法`<tx:advice>`
    3. 配置`<aop:config>`
-       *      1.配置事务切入点`<aop:pointcut/>`   
-              2.配置`<aop:advisor/>`定义通知器，将事务的工作advice与切入点pointcut关联起来
+       *      1.配置事务切入点<aop:pointcut/>  
+              2.配置<aop:advisor/>定义通知器，将事务的工作advice与切入点pointcut关联起来
           
 3. `<tx:advice>` 中的 `<tx:attributes>`
     * `<tx:method name="*" propagation = "REQUIRED"/>`该配置可导致所有服务默认开启事务

@@ -1,5 +1,7 @@
 package com.helloworld.helloworld;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * @author byJiang
  * @title HelloWorld

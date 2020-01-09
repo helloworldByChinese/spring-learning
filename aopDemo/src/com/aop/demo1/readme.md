@@ -1,7 +1,6 @@
 ### Spring aop 使用步骤： 
 1. 加入jar包 
-   1. 以下五个为spring基础引用包  
-       * commons-logging-1.2.jar
+   1. 以下四个为spring基础引用包  
        * spring-beans-5.2.0.RELEASE.jar
        * spring-context-5.2.0.RELEASE.jar
        * spring-core-5.2.0.RELEASE.jar
@@ -11,7 +10,8 @@
        * com.springsource.org.aspectj.weaver-1.7.2.RELEASE.jar  
        * spring-aop-5.2.0.RELEASE.jar  
        * spring-aspects-5.2.0.RELEASE.jar  
-        
+    3. 日志包 
+    * commons-logging-1.2.jar    
 2. 在配置文件中加入aop的命名空间
    * xmlns:context
    * xmlns:aop
